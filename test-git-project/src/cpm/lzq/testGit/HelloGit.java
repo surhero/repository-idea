@@ -11,4 +11,9 @@ public class HelloGit {
 
 
     }
+
+    public void test01(){
+        System.out.println("第一次修改文件");
+    }
+
 }
