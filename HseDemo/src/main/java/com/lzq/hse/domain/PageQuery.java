@@ -1,0 +1,27 @@
+package com.lzq.hse.domain;
+
+/**
+ * Created by lp on 2018/1/3.
+ */
+public class PageQuery {
+    private Integer currentPage=1;
+    private Integer pageSize=5;
+
+    
+
+    public Integer getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(Integer currentPage) {
+		this.currentPage = currentPage;
+	}
+
+	public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+}

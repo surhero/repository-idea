@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzq.hse.mapper.safeInspection.JobProblemMapper">
+  <resultMap id="BaseResultMap" type="com.lzq.hse.pojo.safeInspection.JobProblem">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="job_addr" jdbcType="VARCHAR" property="jobAddr" />
+    <result column="construction_site" jdbcType="VARCHAR" property="constructionSite" />
+    <result column="checker" jdbcType="VARCHAR" property="checker" />
+    <result column="check_time" jdbcType="TIMESTAMP" property="checkTime" />
+    <result column="job_type" jdbcType="VARCHAR" property="jobType" />
+    <result column="modification_state" jdbcType="VARCHAR" property="modificationState" />
+    <result column="is_job_stop" jdbcType="TINYINT" property="isJobStop" />
+    <result column="picture_before" jdbcType="VARCHAR" property="pictureBefore" />
+    <result column="picture_after" jdbcType="VARCHAR" property="pictureAfter" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.lzq.hse.pojo.safeInspection.JobProblem">
+    <result column="problem_desc" jdbcType="LONGVARCHAR" property="problemDesc" />
+    <result column="modification_reason" jdbcType="LONGVARCHAR" property="modificationReason" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, job_addr, construction_site, checker, check_time, job_type, modification_state, 
+    is_job_stop, picture_before, picture_after
+  </sql>
+  <sql id="Blob_Column_List">
+    problem_desc, modification_reason
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.lzq.hse.pojo.safeInspection.JobProblemExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from job_problem
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.lzq.hse.pojo.safeInspection.JobProblemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from job_problem
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from job_problem
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from job_problem
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lzq.hse.pojo.safeInspection.JobProblemExample">
+    delete from job_problem
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lzq.hse.pojo.safeInspection.JobProblem">
+    insert into job_problem (id, job_addr, construction_site, 
+      checker, check_time, job_type, 
+      modification_state, is_job_stop, picture_before, 
+      picture_after, problem_desc, modification_reason
+      )
+    values (#{id,jdbcType=INTEGER}, #{jobAddr,jdbcType=VARCHAR}, #{constructionSite,jdbcType=VARCHAR}, 
+      #{checker,jdbcType=VARCHAR}, #{checkTime,jdbcType=TIMESTAMP}, #{jobType,jdbcType=VARCHAR}, 
+      #{modificationState,jdbcType=VARCHAR}, #{isJobStop,jdbcType=TINYINT}, #{pictureBefore,jdbcType=VARCHAR}, 
+      #{pictureAfter,jdbcType=VARCHAR}, #{problemDesc,jdbcType=LONGVARCHAR}, #{modificationReason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lzq.hse.pojo.safeInspection.JobProblem">
+    insert into job_problem
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="jobAddr != null">
+        job_addr,
+      </if>
+      <if test="constructionSite != null">
+        construction_site,
+      </if>
+      <if test="checker != null">
+        checker,
+      </if>
+      <if test="checkTime != null">
+        check_time,
+      </if>
+      <if test="jobType != null">
+        job_type,
+      </if>
+      <if test="modificationState != null">
+        modification_state,
+      </if>
+      <if test="isJobStop != null">
+        is_job_stop,
+      </if>
+      <if test="pictureBefore != null">
+        picture_before,
+      </if>
+      <if test="pictureAfter != null">
+        picture_after,
+      </if>
+      <if test="problemDesc != null">
+        problem_desc,
+      </if>
+      <if test="modificationReason != null">
+        modification_reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="jobAddr != null">
+        #{jobAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="constructionSite != null">
+        #{constructionSite,jdbcType=VARCHAR},
+      </if>
+      <if test="checker != null">
+        #{checker,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTime != null">
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobType != null">
+        #{jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationState != null">
+        #{modificationState,jdbcType=VARCHAR},
+      </if>
+      <if test="isJobStop != null">
+        #{isJobStop,jdbcType=TINYINT},
+      </if>
+      <if test="pictureBefore != null">
+        #{pictureBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureAfter != null">
+        #{pictureAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="problemDesc != null">
+        #{problemDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="modificationReason != null">
+        #{modificationReason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lzq.hse.pojo.safeInspection.JobProblemExample" resultType="java.lang.Long">
+    select count(*) from job_problem
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update job_problem
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobAddr != null">
+        job_addr = #{record.jobAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.constructionSite != null">
+        construction_site = #{record.constructionSite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checker != null">
+        checker = #{record.checker,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkTime != null">
+        check_time = #{record.checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.jobType != null">
+        job_type = #{record.jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modificationState != null">
+        modification_state = #{record.modificationState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isJobStop != null">
+        is_job_stop = #{record.isJobStop,jdbcType=TINYINT},
+      </if>
+      <if test="record.pictureBefore != null">
+        picture_before = #{record.pictureBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pictureAfter != null">
+        picture_after = #{record.pictureAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.problemDesc != null">
+        problem_desc = #{record.problemDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.modificationReason != null">
+        modification_reason = #{record.modificationReason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update job_problem
+    set id = #{record.id,jdbcType=INTEGER},
+      job_addr = #{record.jobAddr,jdbcType=VARCHAR},
+      construction_site = #{record.constructionSite,jdbcType=VARCHAR},
+      checker = #{record.checker,jdbcType=VARCHAR},
+      check_time = #{record.checkTime,jdbcType=TIMESTAMP},
+      job_type = #{record.jobType,jdbcType=VARCHAR},
+      modification_state = #{record.modificationState,jdbcType=VARCHAR},
+      is_job_stop = #{record.isJobStop,jdbcType=TINYINT},
+      picture_before = #{record.pictureBefore,jdbcType=VARCHAR},
+      picture_after = #{record.pictureAfter,jdbcType=VARCHAR},
+      problem_desc = #{record.problemDesc,jdbcType=LONGVARCHAR},
+      modification_reason = #{record.modificationReason,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update job_problem
+    set id = #{record.id,jdbcType=INTEGER},
+      job_addr = #{record.jobAddr,jdbcType=VARCHAR},
+      construction_site = #{record.constructionSite,jdbcType=VARCHAR},
+      checker = #{record.checker,jdbcType=VARCHAR},
+      check_time = #{record.checkTime,jdbcType=TIMESTAMP},
+      job_type = #{record.jobType,jdbcType=VARCHAR},
+      modification_state = #{record.modificationState,jdbcType=VARCHAR},
+      is_job_stop = #{record.isJobStop,jdbcType=TINYINT},
+      picture_before = #{record.pictureBefore,jdbcType=VARCHAR},
+      picture_after = #{record.pictureAfter,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lzq.hse.pojo.safeInspection.JobProblem">
+    update job_problem
+    <set>
+      <if test="jobAddr != null">
+        job_addr = #{jobAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="constructionSite != null">
+        construction_site = #{constructionSite,jdbcType=VARCHAR},
+      </if>
+      <if test="checker != null">
+        checker = #{checker,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTime != null">
+        check_time = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobType != null">
+        job_type = #{jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationState != null">
+        modification_state = #{modificationState,jdbcType=VARCHAR},
+      </if>
+      <if test="isJobStop != null">
+        is_job_stop = #{isJobStop,jdbcType=TINYINT},
+      </if>
+      <if test="pictureBefore != null">
+        picture_before = #{pictureBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureAfter != null">
+        picture_after = #{pictureAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="problemDesc != null">
+        problem_desc = #{problemDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="modificationReason != null">
+        modification_reason = #{modificationReason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lzq.hse.pojo.safeInspection.JobProblem">
+    update job_problem
+    set job_addr = #{jobAddr,jdbcType=VARCHAR},
+      construction_site = #{constructionSite,jdbcType=VARCHAR},
+      checker = #{checker,jdbcType=VARCHAR},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      job_type = #{jobType,jdbcType=VARCHAR},
+      modification_state = #{modificationState,jdbcType=VARCHAR},
+      is_job_stop = #{isJobStop,jdbcType=TINYINT},
+      picture_before = #{pictureBefore,jdbcType=VARCHAR},
+      picture_after = #{pictureAfter,jdbcType=VARCHAR},
+      problem_desc = #{problemDesc,jdbcType=LONGVARCHAR},
+      modification_reason = #{modificationReason,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lzq.hse.pojo.safeInspection.JobProblem">
+    update job_problem
+    set job_addr = #{jobAddr,jdbcType=VARCHAR},
+      construction_site = #{constructionSite,jdbcType=VARCHAR},
+      checker = #{checker,jdbcType=VARCHAR},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      job_type = #{jobType,jdbcType=VARCHAR},
+      modification_state = #{modificationState,jdbcType=VARCHAR},
+      is_job_stop = #{isJobStop,jdbcType=TINYINT},
+      picture_before = #{pictureBefore,jdbcType=VARCHAR},
+      picture_after = #{pictureAfter,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
